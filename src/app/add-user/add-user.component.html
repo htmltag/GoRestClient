@@ -1,0 +1,72 @@
+<h2>Add User</h2>
+<form [formGroup]="userForm" novalidate (ngSubmit)="onSubmit()">
+    <fieldset>
+        <div class="form-group"
+        [ngClass]="{
+        'has-danger': name.invalid && (name.dirty || name.touched),
+        'has-success': name.valid && (name.dirty || name.touched)
+        }">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" formControlName="name" required />
+            <div class="form-control-feedback" *ngIf="name.errors && (name.dirty || name.touched)">
+                <p class="red-text" *ngIf="name.errors?.['required']">Name is required</p>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="form-group"
+            [ngClass]="{
+            'has-danger': email.invalid && (email.dirty || email.touched),
+            'has-success': email.valid && (email.dirty || email.touched)
+        }">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" formControlName="email" required />
+            <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+                <p class="red-text" *ngIf="email.errors?.['required']">Email is required</p>
+                <p class="red-text" *ngIf="email.errors?.['pattern']">The email address must contain at least the &#64; character</p>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="form-group"
+        [ngClass]="{
+        'has-danger': gender.invalid && (gender.dirty || gender.touched),
+        'has-success': gender.valid && (gender.dirty || gender.touched)
+        }">
+            <label for="gender" class="form-label">Gender</label>
+            <select class="form-control" id="gender" formControlName="gender">
+                <option value="">Please select a gender</option>
+                <option *ngFor="let gender of genders" [value]="gender"> {{gender}} </option>
+            </select>
+            <div *ngIf="gender.touched && gender.errors">
+                <p class="red-text">Gender required</p>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <div class="form-group"
+        [ngClass]="{
+        'has-danger': status.invalid && (status.dirty || status.touched),
+        'has-success': status.valid && (status.dirty || status.touched)
+        }">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-control" id="status" formControlName="status">
+                <option value="">Please select a status</option>
+                <option *ngFor="let status of statuses" [value]="status"> {{status}} </option>
+            </select>
+            <div *ngIf="status.touched && status.errors">
+                <p class="red-text">Status required</p>
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <button type="submit" class="btn btn-primary" >Add this user</button> 
+</form>
+<dialog>
+    <p>100% sure to add this user?</p>
+    <button class="btn btn-danger" (click)="onCancel()" autofocus>Cancel</button>  
+    <button class="btn btn-primary" (click)="onAccept()">Add</button>
+</dialog>
